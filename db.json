@@ -1,0 +1,24 @@
+{
+  "moods": [
+    {
+      "id": "1",
+      "user_id": 1,
+      "mood": "1",
+      "note": "Feeling great",
+      "created_date": "2024-06-01 09:00:00"
+    }
+  ],
+  "users": [
+    {
+      "id": "1",
+      "user_name": "moBamba",
+      "user_password": "thisismobamba",
+      "created_at": "2024-06-01 10:00:00"
+    },
+    {
+      "id": "196a",
+      "userName": "",
+      "userPassword": ""
+    }
+  ]
+}
