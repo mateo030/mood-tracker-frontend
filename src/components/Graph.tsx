@@ -5,11 +5,16 @@ import axios from "axios";
 
 const Graph: React.FC = () => {
   const [moodArr, setMoodArr] = useState<Array<any>>([]);
+  const userId = localStorage.getItem('userId');
 
   useEffect(() => {
     const fetchMoods = async () => {
       try {
-        const response = await axios.get("http://localhost:3000/moods");
+        const response = await axios.get("http://localhost:3000/moods", {
+          params: {
+            user_id: userId
+          }
+        });
         JSON.parse(JSON.stringify(response.data));
         setMoodArr(response.data);
       } catch (error) {

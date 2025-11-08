@@ -110,6 +110,7 @@ const RegisterForm: React.FC = () => {
         formData
       );
       console.log(response);
+      alert("Successfully registered user");
     }
   };
 

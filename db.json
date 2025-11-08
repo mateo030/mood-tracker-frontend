@@ -16,9 +16,10 @@
       "created_at": "2024-06-01 10:00:00"
     },
     {
-      "id": "196a",
-      "userName": "",
-      "userPassword": ""
+      "id": "2",
+      "user_name": "testUser",
+      "user_password": "Lebron23",
+      "created_at": "2024-06-01 10:00:00"
     }
   ]
 }

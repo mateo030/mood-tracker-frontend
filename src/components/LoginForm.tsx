@@ -1,32 +1,80 @@
-import React from "react";
+import React, { type FormEvent } from "react";
+import { useState } from "react";
 import "./AuthForms.css";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
-// The user types their credentials (email + password).
 
-// React sends that data to your backend API (e.g., using fetch or axios).
-
-// The backend checks if it’s valid (using a database).
-
+// The user types their credentials (username + password).
+// React sends that data to your backend API.
+// The backend checks if it’s valid.
 // If valid, the backend responds with a token (like a JWT).
-
 // The frontend stores that token and marks the user as “logged in.”
+// React uses that token for future requests.
 
-// React uses that token for future requests (e.g., getting profile info).
+interface User {
+  id: number;
+  user_name: string;
+  user_password: string;
+  created_at: Date;
+}
 
 const LoginForm: React.FC = () => {
+  const [input, setInput] = useState({
+    username: "",
+    password: "",
+  });
+
+  const navigate = useNavigate();
+
+  const handleSubmitEvent = (e:React.FormEvent) => {
+    e.preventDefault();
+
+    console.log(input.username);
+
+    axios.get("http://localhost:3000/users", {
+      params: {
+        user_name: input.username,
+        user_password: input.password,
+      }
+    })
+    .then((response) => {
+      const users = response.data;
+      users.forEach((user: User) => {
+        console.log(user.id)
+      });
+      localStorage.setItem('userId', String(users[0].id));
+      alert('Login Success！');
+      navigate("/");
+    })
+    .catch((error) => {
+      console.error(error);
+      console.log('ログインに失敗しました。');
+    });
+  };
+
+  const handleInput = (e:React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const {name, value} = e.target;
+    setInput((prev) => ({
+      ...prev,
+      [name]: value,
+    }))
+  };
+
   return (
     <div className="container">
       <div className="card auth-card">
         <h2 className="form-title">Welcome back</h2>
         <p className="form-sub">Sign in to your account</p>
-        <form className="auth-form" noValidate>
+        <form className="auth-form" onSubmit={handleSubmitEvent}>
           <label className="input-label">
             Username
             <input
-              name="email"
-              type="email"
+              name="username"
+              type="text"
               className="input"
               placeholder="Username"
+              onChange={handleInput}
             />
           </label>
 
@@ -37,6 +85,7 @@ const LoginForm: React.FC = () => {
               type="password"
               className="input"
               placeholder="••••••••"
+              onChange={handleInput}
             />
           </label>
 
